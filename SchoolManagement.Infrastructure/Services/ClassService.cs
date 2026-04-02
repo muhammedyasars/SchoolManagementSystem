@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SchoolManagement.Application.DTOs;
 using SchoolManagement.Application.Interfaces;
 using SchoolManagement.Domain.Entities;
@@ -18,21 +18,29 @@ public class ClassService : IClassService
     public async Task<List<ClassDto>> GetAllAsync()
     {
         return await _context.Classes
+            .Include(c => c.TeacherUser)
+            .Include(c => c.School)
             .Select(c => new ClassDto
             {
                 Id = c.Id,
                 ClassName = c.ClassName,
                 ClassCode = c.ClassCode,
-                TeacherFirstName = c.TeacherFirstName,
-                TeacherLastName = c.TeacherLastName,
-                TeacherEmail = c.TeacherEmail,
-                SchoolId = c.SchoolId
+                TeacherUserId = c.TeacherUserId,
+                TeacherFirstName = c.TeacherUser.FirstName,
+                TeacherLastName = c.TeacherUser.LastName,
+                TeacherEmail = c.TeacherUser.Email,
+                SchoolId = c.SchoolId,
+                SchoolName = c.School.SchoolName
             }).ToListAsync();
     }
 
     public async Task<ClassDto> GetByIdAsync(int id)
     {
-        var c = await _context.Classes.FindAsync(id);
+        var c = await _context.Classes
+            .Include(c => c.TeacherUser)
+            .Include(c => c.School)
+            .FirstOrDefaultAsync(x => x.Id == id);
+
         if (c == null) return null;
 
         return new ClassDto
@@ -40,10 +48,12 @@ public class ClassService : IClassService
             Id = c.Id,
             ClassName = c.ClassName,
             ClassCode = c.ClassCode,
-            TeacherFirstName = c.TeacherFirstName,
-            TeacherLastName = c.TeacherLastName,
-            TeacherEmail = c.TeacherEmail,
-            SchoolId = c.SchoolId
+            TeacherUserId = c.TeacherUserId,
+            TeacherFirstName = c.TeacherUser.FirstName,
+            TeacherLastName = c.TeacherUser.LastName,
+            TeacherEmail = c.TeacherUser.Email,
+            SchoolId = c.SchoolId,
+            SchoolName = c.School.SchoolName
         };
     }
 
@@ -53,9 +63,7 @@ public class ClassService : IClassService
         {
             ClassName = dto.ClassName,
             ClassCode = dto.ClassCode,
-            TeacherFirstName = dto.TeacherFirstName,
-            TeacherLastName = dto.TeacherLastName,
-            TeacherEmail = dto.TeacherEmail,
+            TeacherUserId = dto.TeacherUserId,
             SchoolId = dto.SchoolId
         };
 
@@ -73,9 +81,7 @@ public class ClassService : IClassService
 
         cls.ClassName = dto.ClassName;
         cls.ClassCode = dto.ClassCode;
-        cls.TeacherFirstName = dto.TeacherFirstName;
-        cls.TeacherLastName = dto.TeacherLastName;
-        cls.TeacherEmail = dto.TeacherEmail;
+        cls.TeacherUserId = dto.TeacherUserId;
         cls.SchoolId = dto.SchoolId;
 
         await _context.SaveChangesAsync();

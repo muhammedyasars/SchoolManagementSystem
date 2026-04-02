@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolManagement.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using SchoolManagement.Infrastructure.Data;
 namespace SchoolManagement.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260402175926_UpdateSchemaOmitDuplicates")]
+    partial class UpdateSchemaOmitDuplicates
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -315,16 +318,6 @@ namespace SchoolManagement.Infrastructure.Migrations
                             LastName = "S",
                             PasswordHash = "sqH0/QpGBgazTIkT4pgdrI0uKD13irpYbEFu4mKb+lQ=",
                             Role = "Student"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Email = "admin@test.com",
-                            FirstName = "Super",
-                            IsActive = true,
-                            LastName = "Admin",
-                            PasswordHash = "6G94qKPK8LYNjnTllCqm2G3BUM08AzOK7yW30tfjrMc=",
-                            Role = "SuperAdmin"
                         });
                 });
 

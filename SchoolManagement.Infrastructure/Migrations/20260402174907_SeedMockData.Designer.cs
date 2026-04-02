@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolManagement.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using SchoolManagement.Infrastructure.Data;
 namespace SchoolManagement.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260402174907_SeedMockData")]
+    partial class SeedMockData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,14 +43,20 @@ namespace SchoolManagement.Infrastructure.Migrations
                     b.Property<int>("SchoolId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TeacherUserId")
-                        .HasColumnType("int");
+                    b.Property<string>("TeacherEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TeacherFirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TeacherLastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("SchoolId");
-
-                    b.HasIndex("TeacherUserId");
 
                     b.ToTable("Classes");
 
@@ -58,7 +67,9 @@ namespace SchoolManagement.Infrastructure.Migrations
                             ClassCode = "10A-2026",
                             ClassName = "Class 10A",
                             SchoolId = 1,
-                            TeacherUserId = 1
+                            TeacherEmail = "ramesh@test.com",
+                            TeacherFirstName = "Ramesh",
+                            TeacherLastName = "Kumar"
                         },
                         new
                         {
@@ -66,7 +77,9 @@ namespace SchoolManagement.Infrastructure.Migrations
                             ClassCode = "10B-2026",
                             ClassName = "Class 10B",
                             SchoolId = 1,
-                            TeacherUserId = 2
+                            TeacherEmail = "saritha@test.com",
+                            TeacherFirstName = "Saritha",
+                            TeacherLastName = "Nair"
                         },
                         new
                         {
@@ -74,7 +87,9 @@ namespace SchoolManagement.Infrastructure.Migrations
                             ClassCode = "9A-2026",
                             ClassName = "Class 9A",
                             SchoolId = 2,
-                            TeacherUserId = 3
+                            TeacherEmail = "manoj@test.com",
+                            TeacherFirstName = "Manoj",
+                            TeacherLastName = "Pillai"
                         });
                 });
 
@@ -145,6 +160,14 @@ namespace SchoolManagement.Infrastructure.Migrations
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Gender")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -152,18 +175,16 @@ namespace SchoolManagement.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Points")
-                        .HasColumnType("int");
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("Points")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ClassId");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
 
                     b.ToTable("Students");
 
@@ -173,40 +194,48 @@ namespace SchoolManagement.Infrastructure.Migrations
                             Id = 1,
                             ClassId = 1,
                             DateOfBirth = new DateTime(2010, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "rahul@test.com",
+                            FirstName = "Rahul",
                             Gender = "Male",
                             IsActive = true,
-                            Points = 10,
-                            UserId = 4
+                            LastName = "Nair",
+                            Points = 10
                         },
                         new
                         {
                             Id = 2,
                             ClassId = 1,
                             DateOfBirth = new DateTime(2010, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "sneha@test.com",
+                            FirstName = "Sneha",
                             Gender = "Female",
                             IsActive = true,
-                            Points = 15,
-                            UserId = 5
+                            LastName = "V",
+                            Points = 15
                         },
                         new
                         {
                             Id = 3,
                             ClassId = 2,
                             DateOfBirth = new DateTime(2010, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "arjun@test.com",
+                            FirstName = "Arjun",
                             Gender = "Male",
                             IsActive = true,
-                            Points = 5,
-                            UserId = 6
+                            LastName = "K",
+                            Points = 5
                         },
                         new
                         {
                             Id = 4,
                             ClassId = 3,
                             DateOfBirth = new DateTime(2011, 3, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "meera@test.com",
+                            FirstName = "Meera",
                             Gender = "Female",
                             IsActive = true,
-                            Points = 20,
-                            UserId = 7
+                            LastName = "S",
+                            Points = 20
                         });
                 });
 
@@ -222,16 +251,8 @@ namespace SchoolManagement.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
@@ -250,81 +271,9 @@ namespace SchoolManagement.Infrastructure.Migrations
                         {
                             Id = 1,
                             Email = "teacher@test.com",
-                            FirstName = "Ramesh",
                             IsActive = true,
-                            LastName = "Kumar",
                             PasswordHash = "/3vZexp3id3Sd1Ei/WgX8xc2ctqfgCzuxX8oQyW/WJ8=",
                             Role = "Teacher"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Email = "saritha@test.com",
-                            FirstName = "Saritha",
-                            IsActive = true,
-                            LastName = "Nair",
-                            PasswordHash = "/3vZexp3id3Sd1Ei/WgX8xc2ctqfgCzuxX8oQyW/WJ8=",
-                            Role = "Teacher"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Email = "manoj@test.com",
-                            FirstName = "Manoj",
-                            IsActive = true,
-                            LastName = "Pillai",
-                            PasswordHash = "/3vZexp3id3Sd1Ei/WgX8xc2ctqfgCzuxX8oQyW/WJ8=",
-                            Role = "Teacher"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Email = "rahul@test.com",
-                            FirstName = "Rahul",
-                            IsActive = true,
-                            LastName = "Nair",
-                            PasswordHash = "sqH0/QpGBgazTIkT4pgdrI0uKD13irpYbEFu4mKb+lQ=",
-                            Role = "Student"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Email = "sneha@test.com",
-                            FirstName = "Sneha",
-                            IsActive = true,
-                            LastName = "V",
-                            PasswordHash = "sqH0/QpGBgazTIkT4pgdrI0uKD13irpYbEFu4mKb+lQ=",
-                            Role = "Student"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Email = "arjun@test.com",
-                            FirstName = "Arjun",
-                            IsActive = true,
-                            LastName = "K",
-                            PasswordHash = "sqH0/QpGBgazTIkT4pgdrI0uKD13irpYbEFu4mKb+lQ=",
-                            Role = "Student"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Email = "meera@test.com",
-                            FirstName = "Meera",
-                            IsActive = true,
-                            LastName = "S",
-                            PasswordHash = "sqH0/QpGBgazTIkT4pgdrI0uKD13irpYbEFu4mKb+lQ=",
-                            Role = "Student"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Email = "admin@test.com",
-                            FirstName = "Super",
-                            IsActive = true,
-                            LastName = "Admin",
-                            PasswordHash = "6G94qKPK8LYNjnTllCqm2G3BUM08AzOK7yW30tfjrMc=",
-                            Role = "SuperAdmin"
                         });
                 });
 
@@ -336,15 +285,7 @@ namespace SchoolManagement.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SchoolManagement.Domain.Entities.User", "TeacherUser")
-                        .WithMany()
-                        .HasForeignKey("TeacherUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("School");
-
-                    b.Navigation("TeacherUser");
                 });
 
             modelBuilder.Entity("SchoolManagement.Domain.Entities.Student", b =>
@@ -355,15 +296,7 @@ namespace SchoolManagement.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SchoolManagement.Domain.Entities.User", "User")
-                        .WithOne("Student")
-                        .HasForeignKey("SchoolManagement.Domain.Entities.Student", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Class");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SchoolManagement.Domain.Entities.Class", b =>
@@ -374,11 +307,6 @@ namespace SchoolManagement.Infrastructure.Migrations
             modelBuilder.Entity("SchoolManagement.Domain.Entities.School", b =>
                 {
                     b.Navigation("Classes");
-                });
-
-            modelBuilder.Entity("SchoolManagement.Domain.Entities.User", b =>
-                {
-                    b.Navigation("Student");
                 });
 #pragma warning restore 612, 618
         }

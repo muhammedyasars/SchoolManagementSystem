@@ -1,4 +1,4 @@
-﻿namespace SchoolManagement.Domain.Entities;
+namespace SchoolManagement.Domain.Entities;
 
 public class User
 {
@@ -10,4 +10,11 @@ public class User
     public string Role { get; set; }  
 
     public bool IsActive { get; set; } = true;
+
+    // Duplicates ozhivakkan: Name details users-il mathram mathi
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+
+    // Navigation properties
+    public Student? Student { get; set; }
 }

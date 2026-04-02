@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using SchoolManagement.Application.DTOs;
 using SchoolManagement.Application.Interfaces;
@@ -28,18 +28,18 @@ public class SchoolController : ControllerBase
         => Ok(await _service.GetByIdAsync(id));
 
    
-    [Authorize(Roles = "Teacher")]
+    [Authorize(Roles = "SuperAdmin")]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] SchoolDto dto)
         => Ok(await _service.CreateAsync(dto));
  
-    [Authorize(Roles = "Teacher")]
+    [Authorize(Roles = "SuperAdmin")]
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, [FromBody] SchoolDto dto)
         => Ok(await _service.UpdateAsync(id, dto));
 
   
-    [Authorize(Roles = "Teacher")]
+    [Authorize(Roles = "SuperAdmin")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
         => Ok(await _service.DeleteAsync(id));

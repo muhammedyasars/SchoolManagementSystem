@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,9 +12,10 @@ namespace SchoolManagement.Domain.Entities
         public string ClassName { get; set; }
         public string? ClassCode { get; set; }
 
-        public string TeacherFirstName { get; set; }
-        public string TeacherLastName { get; set; }
-        public string? TeacherEmail { get; set; }
+        // Teacher name details users-il mathram mathi
+        // Id mathram mathi teacher-ne identify cheyyan
+        public int TeacherUserId { get; set; }
+        public User TeacherUser { get; set; }
 
         public int SchoolId { get; set; }
         public School School { get; set; }
